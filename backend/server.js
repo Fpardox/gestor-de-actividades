@@ -20,6 +20,7 @@ const taskSchema = new mongoose.Schema({
 
 const Task = mongoose.model('Task', taskSchema);
 
+// Ruta para OBTENER todas las tareas
 app.get('/api/tasks', async (req, res) => {
   try {
     const tasks = await Task.find();
@@ -29,7 +30,47 @@ app.get('/api/tasks', async (req, res) => {
   }
 });
 
-// ... (El resto de tus rutas POST, PUT, DELETE sin cambios) ...
+// Ruta para CREAR una nueva tarea
+app.post('/api/tasks', async (req, res) => {
+  const task = new Task({
+    title: req.body.title,
+    completed: false
+  });
+  try {
+    const newTask = await task.save();
+    res.status(201).json(newTask);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Ruta para ACTUALIZAR una tarea por su ID
+app.put('/api/tasks/:id', async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    task.completed = req.body.completed;
+    const updatedTask = await task.save();
+    res.json(updatedTask);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Ruta para ELIMINAR una tarea por su ID
+app.delete('/api/tasks/:id', async (req, res) => {
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.status(204).json();
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Esta condición evita que el servidor se inicie automáticamente durante las pruebas
 if (process.env.NODE_ENV !== 'test') {
@@ -38,4 +79,4 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
-module.exports = app; // Exportamos la app para usarla en las pruebas
+module.exports = app;
