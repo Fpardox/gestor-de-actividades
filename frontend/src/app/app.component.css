@@ -1,0 +1,35 @@
+/* La regla ahora apunta directamente al span con la clase .completed */
+.completed {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.task-title {
+  margin-left: 8px; /* Un pequeño espacio entre la casilla y el texto */
+}
+
+/* El resto de los estilos que ya teníamos */
+.container {
+  margin: 20px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.task-input {
+  flex-grow: 1;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+mat-list-item {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+
+  <div class="form-container">
+    <mat-form-field appearance="outline" class="task-input">
+      <mat-label>¿Qué necesitas hacer?</mat-label>
+      <input matInput #taskInput (keyup.enter)="addTask(taskInput.value); taskInput.value=''">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addTask(taskInput.value); taskInput.value=''">
+      Añadir Tarea
+    </button>
+  </div>
+
+  <h2>Lista de Tareas</h2>
+  <mat-list>
+  <div *ngFor="let task of tasks">
+    <mat-list-item>
+      <mat-checkbox [checked]="task.completed" (change)="updateTask(task)"></mat-checkbox>
+
+      <span [class.completed]="task.completed" class="task-title">
+        {{ task.title }}
+      </span>
+
+      <span class="spacer"></span>
+      <button mat-icon-button color="warn" (click)="deleteTask(task)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </div>
+</mat-list>
+</div>
+
+<router-outlet />

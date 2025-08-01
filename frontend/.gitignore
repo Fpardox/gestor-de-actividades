@@ -1,0 +1,17 @@
+# Node Modules
+backend/node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/.angular/cache/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE files
+.idea/
+.vscode/
+node_modules
