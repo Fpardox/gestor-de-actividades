@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-
-// --- IMPORTACIONES NUEVAS DE ANGULAR MATERIAL ---
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
@@ -11,11 +9,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  // --- AÑADIR LOS MÓDULOS AQUÍ ---
   imports: [
     RouterOutlet,
     CommonModule,
@@ -32,9 +28,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class AppComponent implements OnInit {
   title = 'Gestor de Tareas';
   tasks: any[] = [];
-  private apiUrl = 'http://localhost:3000/api/tasks';
+  private apiUrl = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    if (isDevMode()) {
+      this.apiUrl = 'http://localhost:3000/api/tasks';
+    } else {
+      this.apiUrl = 'https://gestor-de-actividades.onrender.com';
+    }
+  }
 
   ngOnInit() {
     this.getTasks();
