@@ -1,6 +1,6 @@
 [build]
   base    = "frontend"
-  publish = "dist"
+  publish = "dist/frontend"
   command = "npx ng build"
 
 [[redirects]]
