@@ -15,8 +15,14 @@ jobs:
     - name: Install Backend Dependencies
       working-directory: ./backend
       run: npm install
+
+    
+    - name: Add execute permission to Jest
+      working-directory: ./backend
+      run: chmod +x ./node_modules/.bin/jest
+
     - name: Run Backend Tests
       working-directory: ./backend
-      run: npm test
+      run: npx jest
       env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
