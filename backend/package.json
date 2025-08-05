@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "jest"
-  },
+  "start": "node server.js",
+  "test": "jest"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "mongoose": "^8.17.0"
   },
   "devDependencies": {
+    "dotenv-cli": "^10.0.0",
     "jest": "^30.0.5",
     "supertest": "^7.1.4"
   }
