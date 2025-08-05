@@ -6,8 +6,8 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Se usa la configuración por defecto de cors, que es más permisiva
-app.use(cors());
+// --- CONFIGURACIÓN CLAVE DE CORS ---
+app.use(cors()); // Permite peticiones desde cualquier origen
 
 app.use(express.json());
 
@@ -28,6 +28,7 @@ const Task = mongoose.model('Task', taskSchema);
 app.get('/', (req, res) => {
   res.send('¡Backend funcionando!');
 });
+
 app.get('/api/tasks', async (req, res) => {
   try {
     res.setHeader('Cache-Control', 'no-cache');
@@ -37,6 +38,7 @@ app.get('/api/tasks', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 app.post('/api/tasks', async (req, res) => {
   const newTask = new Task({
     title: req.body.title,
@@ -49,6 +51,7 @@ app.post('/api/tasks', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 app.put('/api/tasks/:id', async (req, res) => {
   try {
     const updatedTask = await Task.findByIdAndUpdate(
@@ -61,6 +64,7 @@ app.put('/api/tasks/:id', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 app.delete('/api/tasks/:id', async (req, res) => {
   try {
     await Task.findByIdAndDelete(req.params.id);
@@ -70,8 +74,11 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor backend escuchando en el puerto ${PORT}`);
-});
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Servidor backend escuchando en el puerto ${PORT}`);
+  });
+}
 
 module.exports = app;
